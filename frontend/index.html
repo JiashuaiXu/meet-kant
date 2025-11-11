@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet-Kant: Kantian Philosophy Knowledge System</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .input-section {
+            margin: 20px 0;
+        }
+        .question-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .lang-selector {
+            margin: 10px 0;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        .evidence-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fd;
+            border-radius: 4px;
+        }
+        .graph-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff3cd;
+            border-radius: 4px;
+        }
+        .neighbor-item {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #fff;
+            border-radius: 3px;
+            border-left: 3px solid #f39c12;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+        }
+        .error {
+            color: #e74c3c;
+            padding: 15px;
+            background-color: #fadbd8;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .metadata {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>🤖 Meet-Kant: Kantian Philosophy Knowledge System</h1>
+            
+            <div class="input-section">
+                <textarea 
+                    v-model="question" 
+                    class="question-input" 
+                    rows="3"
+                    placeholder="Ask a question about Kant's philosophy... (e.g., 'What is the categorical imperative?', '康德的先验概念是什么?')">
+                </textarea>
+                
+                <div class="lang-selector">
+                    <label for="language">Language:</label>
+                    <select v-model="language" id="language">
+                        <option value="zh">Chinese (中文)</option>
+                        <option value="en">English</option>
+                        <option value="de">German (Deutsch)</option>
+                    </select>
+                </div>
+                
+                <button 
+                    @click="getAnswer" 
+                    class="btn" 
+                    :disabled="loading"
+                >
+                    {{ loading ? 'Processing...' : 'Ask Question' }}
+                </button>
+            </div>
+            
+            <div v-if="error" class="error">
+                {{ error }}
+            </div>
+            
+            <div v-if="loading" class="loading">
+                🤔 Processing your question...
+            </div>
+            
+            <div v-if="answer && !loading" class="result-section">
+                <h3>🧠 Answer</h3>
+                <p>{{ answer }}</p>
+                
+                <div v-if="evidence.length > 0" class="evidence-section">
+                    <h4>🔍 Evidence Sources</h4>
+                    <div v-for="(item, index) in evidence" :key="index">
+                        <p><strong>Work:</strong> {{ item.work_id }} | <strong>Para:</strong> {{ item.para_id }} | <strong>Lang:</strong> {{ item.lang }}</p>
+                        <p>{{ item.text }}</p>
+                        <div class="metadata">Score: {{ item.score.toFixed(4) }}</div>
+                    </div>
+                </div>
+                
+                <div v-if="graphHits.length > 0" class="graph-section">
+                    <h4>🌐 Related Concepts</h4>
+                    <div v-for="(hit, index) in graphHits" :key="index" class="neighbor-item">
+                        <strong>{{ hit.name }}</strong> ({{ hit.entity_type }}) - {{ hit.relationship }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/App.js"></script>
+</body>
+</html>

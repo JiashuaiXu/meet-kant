@@ -1,0 +1,20 @@
+# Configuration for Meet-Kant project
+# This is an example configuration file
+
+{
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "vector_store_path": "resource/kant/vector_store.index",
+  "max_neighbors": 5,
+  "default_language": "zh",
+  "supported_languages": ["zh", "en", "de"],
+  "graph_config": {
+    "uri": "bolt://localhost:7687",
+    "user": "neo4j",
+    "password": "password"
+  },
+  "api_config": {
+    "host": "0.0.0.0",
+    "port": 8000,
+    "reload": true
+  }
+}

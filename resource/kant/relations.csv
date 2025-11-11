@@ -1,0 +1,17 @@
+source_id,target_id,rel_type,notes
+kant,pure_reason,AUTHORED,Kant authored the Critique of Pure Reason
+kant,practical_reason,AUTHORED,Kant authored the Critique of Practical Reason
+kant,judgment,AUTHORED,Kant authored the Critique of Judgment
+kant,groundwork,AUTHORED,Kant authored the Groundwork of the Metaphysics of Morals
+hume,kant,INFLUENCED_BY,Hume influenced Kant
+leibniz,kant,INFLUENCED_BY,Leibniz influenced Kant
+wolff,kant,INFLUENCED_BY,Wolff influenced Kant
+kant,categorical_imperative,DEFINES,Kant defines the categorical imperative
+kant,noumenon,DEFINES,Kant defines the concept of noumenon
+kant,phenomenon,DEFINES,Kant defines the concept of phenomenon
+kant,transcendental,DEFINES,Kant defines transcendental concepts
+pure_reason,noumenon,DEFINES,Pure Reason discusses noumenon
+practical_reason,categorical_imperative,DEFINES,Practical Reason discusses categorical imperative
+categorical_imperative,groundwork,RELATES_TO,Groundwork develops categorical imperative concept
+noumenon,phenomenon,RELATES_TO,Noumenon and phenomenon are related concepts
+transcendental,aesthetic,RELATES_TO,Transcendental concepts include transcendental aesthetic
